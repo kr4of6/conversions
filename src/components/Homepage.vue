@@ -1,6 +1,6 @@
 <template>
     <div class="home">
-	<h1>Kitchen Conversions</h1>
+	<!-- <h1>Kitchen Conversions</h1> -->
 	<img v-bind:src="imagePath"/>
     </div>
 </template>
