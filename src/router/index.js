@@ -12,7 +12,7 @@ export default new Router({
       component: Homepage
     },
     {
-      path: '/',
+      path: '/Liquid',
       name: 'Liquid',
       component: Liquid
     }
