@@ -23,6 +23,9 @@
             <!-- v-on:click.self.prevent -->
   <button v-on:click.self.prevent="convert">convert</button>
   <h2>{{result}}</h2>
+  <ul>
+    <li v-for="item in history"> <label>{{item}}</label></li>
+  </ul>
     </div>
 
 </template>
@@ -42,6 +45,7 @@ export default {
       LITER_TO_CUP: 4.22675,
       GALLON_TO_CUP: 16,
       FL_ONZ_TO_CUP : .125,
+      history: [],
     };
   },
   methods: {
@@ -86,9 +90,17 @@ export default {
       else if (this.selected2 === "Cup"){
         fromCupToNew = convertedToCups;
       }
+      fromCupToNew = fromCupToNew.toFixed(2);
       this.result += fromCupToNew + " " + this.selected2;
       if(fromCupToNew !== 1)
         this.result += "s";
+
+      if(history === undefined)
+      {
+        history = new Array();
+      }
+      var histRes = this.quantity + " " + this.selected + " = " + fromCupToNew + " " + this.selected2;
+    this.history.unshift(histRes);
     }
   }
 };
