@@ -2,8 +2,7 @@
     <div class="home">
 	<!-- <h1>Kitchen Conversions</h1> -->
 <p>Convert </p>
-<input v-model.number="quantity" type="number">
-
+<input v-model="quantity" type="number">
         <select v-model="selected">
             <!-- <option disabled value=""> Please choose measursement Type</option> -->
             <option>Liter</option>
@@ -30,10 +29,7 @@
 
 <script>
 export default {
-  PINT_TO_CUP:2,
-  LITER_TO_CUP: 4.22675,
-  GALLON_TO_CUP: 16,
-  FL_ONZ_TO_CUP : .125,
+  
 
   name: "Liquid",
   data() {
@@ -41,7 +37,11 @@ export default {
       selected: "",
       selected2: "",
       quantity: 0,
-      result: ""
+      result: "",
+      PINT_TO_CUP:2,
+      LITER_TO_CUP: 4.22675,
+      GALLON_TO_CUP: 16,
+      FL_ONZ_TO_CUP : .125,
     };
   },
   methods: {
@@ -49,20 +49,22 @@ export default {
       console.log("I've been hit");
       this.result = "Results: ";
       var convertedToCups = 0;
-            console.log(this.quantity);
-
+      console.log(this.quantity);
+      var quantityTemp = Number(this.quantity);
+      console.log(typeof(quantityTemp));
+      console.log(this.PINT_TO_CUP);
       if (this.selected === "Pint")
       {
-        convertedToCups = this.quantity /this.PINT_TO_CUP;
+        convertedToCups = quantityTemp / Number(this.PINT_TO_CUP);
       }
        else if (this.selected === "Gallon") {
-         convertedToCups = this.quantity / this.GALLON_TO_CUP;
+         convertedToCups = quantityTemp / this.GALLON_TO_CUP;
       }
       else if (this.selected === "Liter") {
-         convertedToCups = this.quantity / this.LITER_TO_CUP;
+         convertedToCups = quantityTemp / this.LITER_TO_CUP;
       }
       else if (this.selected === "Fluid Ounces") {
-         convertedToCups = this.quantity / this.FL_ONZ_TO_CUP;
+         convertedToCups = quantityTemp / this.FL_ONZ_TO_CUP;
       }
       console.log(convertedToCups);
       this.result += convertedToCups;
