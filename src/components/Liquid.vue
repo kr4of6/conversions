@@ -21,8 +21,9 @@
             <!-- v-on:click.self.prevent -->
   <button v-on:click.self.prevent="convert">convert</button>
   <h2>{{result}}</h2>
-  <div  v-if="history.length > 0">
-  <label >History</label>
+  <div v-if="history.length > 0">
+  <hr>
+  <label  class="h" >History</label>
   </div>
   <ul >
     <li v-for="item in history"> <label>{{item}}</label></li>
@@ -81,7 +82,7 @@ export default {
       }
       fromCupToNew = fromCupToNew.toFixed(2);
       this.result += fromCupToNew + " " + this.selected2;
-      if (fromCupToNew !== 1 && selected2 !== "Fluid Ounces") this.result += "s";
+      if (fromCupToNew !== 1 && this.selected2 !== "Fluid Ounces") this.result += "s";
 
       if (history === undefined) {
         history = new Array();
@@ -114,13 +115,18 @@ h1 {
   color: black;
   margin-bottom: 40px;
 }
+h2 {
+  margin:40px 0px;
+}
 
 button {
   /* background:linear-gradient(rgb(181, 255, 245), rgb(117, 204, 206)); */
   border-radius: 5px;
-  border-width: 1px;
-  border-style: none;
-  background-color: #666;
+  border-width: .5px;
+  border-style: solid;
+  border-color: rgb(158, 158, 158);
+  color: #ff5035;
+  /* font-weight:bold; */
   /* border-color: slategray; */
 }
 
@@ -129,6 +135,9 @@ input, textarea, select, button {
 
 }
 
+hr {
+  width:50%;
+}
 
 ul {
   list-style-type: none;
