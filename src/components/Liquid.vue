@@ -63,7 +63,7 @@ export default {
       this.result = "Results: ";
       var convertedToCups = 0;
       console.log(this.quantity);
-      var quantityTemp = this.quantity; //Number(this.quantity);
+      var quantityTemp = Number(this.quantity);
       if (this.selected === "Pint") {
         convertedToCups = quantityTemp * this.PINT_TO_CUP;
       } else if (this.selected === "Gallon") {
