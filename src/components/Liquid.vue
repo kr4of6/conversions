@@ -22,8 +22,8 @@
   <button v-on:click.self.prevent="convert">convert</button>
   <h2>{{result}}</h2>
   <div v-if="history.length > 0">
-  <hr>
-  <label  class="h" >History</label>
+  <!-- <hr> -->
+  <h2  class="h" >History</h2>
   </div>
   <ul >
     <li v-for="item in history"> <label>{{item}}</label></li>
@@ -117,6 +117,7 @@ h1 {
 }
 h2 {
   margin:40px 0px;
+
 }
 
 button {
@@ -134,6 +135,11 @@ input, textarea, select, button {
   font-size:16px;
 
 }
+.h {
+  color:#666;
+    margin:10px 0px;
+
+}
 
 hr {
   width:50%;
@@ -142,9 +148,13 @@ hr {
 ul {
   list-style-type: none;
   padding:0;
+  color:#666;
+
 
 }
 li {
+    margin:5px 0px;
+
 }
 
 </style>
