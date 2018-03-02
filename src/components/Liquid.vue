@@ -122,12 +122,14 @@ h2 {
 button {
   /* background:linear-gradient(rgb(181, 255, 245), rgb(117, 204, 206)); */
   border-radius: 5px;
+
   border-width: .5px;
   border-style: solid;
   border-color: rgb(158, 158, 158);
   color: #ff5035;
   /* font-weight:bold; */
   /* border-color: slategray; */
+
 }
 
 input, textarea, select, button {
