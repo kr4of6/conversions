@@ -50,24 +50,45 @@ export default {
       this.result = "Results: ";
       var convertedToCups = 0;
       console.log(this.quantity);
-      var quantityTemp = Number(this.quantity);
-      console.log(typeof(quantityTemp));
-      console.log(this.PINT_TO_CUP);
+      var quantityTemp = this.quantity; //Number(this.quantity);
       if (this.selected === "Pint")
       {
-        convertedToCups = quantityTemp / Number(this.PINT_TO_CUP);
+        convertedToCups = quantityTemp * this.PINT_TO_CUP;
       }
        else if (this.selected === "Gallon") {
-         convertedToCups = quantityTemp / this.GALLON_TO_CUP;
+         convertedToCups = quantityTemp * this.GALLON_TO_CUP;
       }
       else if (this.selected === "Liter") {
-         convertedToCups = quantityTemp / this.LITER_TO_CUP;
+         convertedToCups = quantityTemp * this.LITER_TO_CUP;
       }
       else if (this.selected === "Fluid Ounces") {
-         convertedToCups = quantityTemp / this.FL_ONZ_TO_CUP;
+         convertedToCups = quantityTemp * this.FL_ONZ_TO_CUP;
+      }
+      else if (this.selected === "Cup"){
+        convertedToCups = quantityTemp;
       }
       console.log(convertedToCups);
-      this.result += convertedToCups;
+      // this.result += convertedToCups;
+      var fromCupToNew = 0;
+      if (this.selected2 === "Pint")
+      {
+        fromCupToNew = convertedToCups / this.PINT_TO_CUP  ;
+      }
+      else if (this.selected2 === "Gallon") {
+         fromCupToNew = convertedToCups / this.GALLON_TO_CUP ;
+      }
+      else if (this.selected2 === "Liter") {
+         fromCupToNew = convertedToCups / this.LITER_TO_CUP  ;
+      }
+      else if (this.selected2 === "Fluid Ounces") {
+         fromCupToNew = convertedToCups /this.FL_ONZ_TO_CUP  ;
+      }
+      else if (this.selected2 === "Cup"){
+        fromCupToNew = convertedToCups;
+      }
+      this.result += fromCupToNew + " " + this.selected2;
+      if(fromCupToNew !== 1)
+        this.result += "s";
     }
   }
 };
