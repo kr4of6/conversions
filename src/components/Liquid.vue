@@ -116,8 +116,12 @@ h1 {
 }
 
 button {
-  background:linear-gradient(cadetblue, pink);
+  /* background:linear-gradient(rgb(181, 255, 245), rgb(117, 204, 206)); */
   border-radius: 5px;
+  border-width: 1px;
+  border-style: none;
+  background-color: #666;
+  /* border-color: slategray; */
 }
 
 input, textarea, select, button {
