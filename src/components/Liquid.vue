@@ -1,7 +1,5 @@
 <template>
     <div class="home">
-	<!-- <h1>Kitchen Conversions</h1> -->
-<p>Convert </p>
 <input v-model="quantity" type="number">
         <select v-model="selected">
             <!-- <option disabled value=""> Please choose measursement Type</option> -->
@@ -83,7 +81,7 @@ export default {
       }
       fromCupToNew = fromCupToNew.toFixed(2);
       this.result += fromCupToNew + " " + this.selected2;
-      if (fromCupToNew !== 1) this.result += "s";
+      if (fromCupToNew !== 1 && selected2 !== "Fluid Ounces") this.result += "s";
 
       if (history === undefined) {
         history = new Array();
@@ -116,7 +114,24 @@ h1 {
   color: black;
   margin-bottom: 40px;
 }
-img {
-  width: 50%;
+
+button {
+  background:linear-gradient(cadetblue, pink);
+  border-radius: 5px;
 }
+
+input, textarea, select, button {
+  font-size:16px;
+
+}
+
+
+ul {
+  list-style-type: none;
+  padding:0;
+
+}
+li {
+}
+
 </style>
