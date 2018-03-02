@@ -23,7 +23,10 @@
             <!-- v-on:click.self.prevent -->
   <button v-on:click.self.prevent="convert">convert</button>
   <h2>{{result}}</h2>
-  <ul>
+  <div  v-if="history.length > 0">
+  <label >History</label>
+  </div>
+  <ul >
     <li v-for="item in history"> <label>{{item}}</label></li>
   </ul>
     </div>
@@ -32,8 +35,6 @@
 
 <script>
 export default {
-  
-
   name: "Liquid",
   data() {
     return {
@@ -41,11 +42,11 @@ export default {
       selected2: "",
       quantity: 0,
       result: "",
-      PINT_TO_CUP:2,
+      PINT_TO_CUP: 2,
       LITER_TO_CUP: 4.22675,
       GALLON_TO_CUP: 16,
-      FL_ONZ_TO_CUP : .125,
-      history: [],
+      FL_ONZ_TO_CUP: 0.125,
+      history: []
     };
   },
   methods: {
@@ -55,52 +56,47 @@ export default {
       var convertedToCups = 0;
       console.log(this.quantity);
       var quantityTemp = this.quantity; //Number(this.quantity);
-      if (this.selected === "Pint")
-      {
+      if (this.selected === "Pint") {
         convertedToCups = quantityTemp * this.PINT_TO_CUP;
-      }
-       else if (this.selected === "Gallon") {
-         convertedToCups = quantityTemp * this.GALLON_TO_CUP;
-      }
-      else if (this.selected === "Liter") {
-         convertedToCups = quantityTemp * this.LITER_TO_CUP;
-      }
-      else if (this.selected === "Fluid Ounces") {
-         convertedToCups = quantityTemp * this.FL_ONZ_TO_CUP;
-      }
-      else if (this.selected === "Cup"){
+      } else if (this.selected === "Gallon") {
+        convertedToCups = quantityTemp * this.GALLON_TO_CUP;
+      } else if (this.selected === "Liter") {
+        convertedToCups = quantityTemp * this.LITER_TO_CUP;
+      } else if (this.selected === "Fluid Ounces") {
+        convertedToCups = quantityTemp * this.FL_ONZ_TO_CUP;
+      } else if (this.selected === "Cup") {
         convertedToCups = quantityTemp;
       }
       console.log(convertedToCups);
       // this.result += convertedToCups;
       var fromCupToNew = 0;
-      if (this.selected2 === "Pint")
-      {
-        fromCupToNew = convertedToCups / this.PINT_TO_CUP  ;
-      }
-      else if (this.selected2 === "Gallon") {
-         fromCupToNew = convertedToCups / this.GALLON_TO_CUP ;
-      }
-      else if (this.selected2 === "Liter") {
-         fromCupToNew = convertedToCups / this.LITER_TO_CUP  ;
-      }
-      else if (this.selected2 === "Fluid Ounces") {
-         fromCupToNew = convertedToCups /this.FL_ONZ_TO_CUP  ;
-      }
-      else if (this.selected2 === "Cup"){
+      if (this.selected2 === "Pint") {
+        fromCupToNew = convertedToCups / this.PINT_TO_CUP;
+      } else if (this.selected2 === "Gallon") {
+        fromCupToNew = convertedToCups / this.GALLON_TO_CUP;
+      } else if (this.selected2 === "Liter") {
+        fromCupToNew = convertedToCups / this.LITER_TO_CUP;
+      } else if (this.selected2 === "Fluid Ounces") {
+        fromCupToNew = convertedToCups / this.FL_ONZ_TO_CUP;
+      } else if (this.selected2 === "Cup") {
         fromCupToNew = convertedToCups;
       }
       fromCupToNew = fromCupToNew.toFixed(2);
       this.result += fromCupToNew + " " + this.selected2;
-      if(fromCupToNew !== 1)
-        this.result += "s";
+      if (fromCupToNew !== 1) this.result += "s";
 
-      if(history === undefined)
-      {
+      if (history === undefined) {
         history = new Array();
       }
-      var histRes = this.quantity + " " + this.selected + " = " + fromCupToNew + " " + this.selected2;
-    this.history.unshift(histRes);
+      var histRes =
+        this.quantity +
+        " " +
+        this.selected +
+        " = " +
+        fromCupToNew +
+        " " +
+        this.selected2;
+      this.history.unshift(histRes);
     }
   }
 };
