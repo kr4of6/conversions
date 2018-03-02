@@ -31,6 +31,6 @@
      margin-bottom: 40px;
  }
  img {
-     width: 50%;
+     width: 30%;
  }
 </style>
