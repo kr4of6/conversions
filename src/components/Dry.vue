@@ -32,7 +32,7 @@
 
 <script>
 export default {
-  name: "Liquid",
+  name: "Dry",
   data() {
     return {
       selected: "",
