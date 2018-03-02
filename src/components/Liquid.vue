@@ -3,20 +3,26 @@
 <input v-model="quantity" type="number">
         <select v-model="selected">
             <!-- <option disabled value=""> Please choose measursement Type</option> -->
-            <option>Liter</option>
+             <option>Teaspoon</option>
+            <option>Tablespoon</option>
             <option>Fluid Ounces</option>
-            <option>Gallon</option>
-            <option>Pint</option>
             <option>Cup</option>
+            <option>Pint</option>
+            <option>Quart</option>
+            <option>Liter</option>
+            <option>Gallon</option>
             </select>
 <label> to </label>
             <select v-model="selected2">
             <!-- <option disabled value="">Choose</option> -->
-            <option>Liter</option>
+            <option>Teaspoon</option>
+            <option>Tablespoon</option>
             <option>Fluid Ounces</option>
-            <option>Gallon</option>
-            <option>Pint</option>
             <option>Cup</option>
+            <option>Pint</option>
+            <option>Quart</option>
+            <option>Liter</option>
+            <option>Gallon</option>
             </select>
             <!-- v-on:click.self.prevent -->
   <button v-on:click.self.prevent="convert">convert</button>
@@ -41,10 +47,13 @@ export default {
       selected2: "",
       quantity: 0,
       result: "",
-      PINT_TO_CUP: 2,
-      LITER_TO_CUP: 4.22675,
-      GALLON_TO_CUP: 16,
+      TEA_TO_CUP: 0.0208333,
+      TABLE_TO_CUP: 0.0625,
       FL_ONZ_TO_CUP: 0.125,
+      PINT_TO_CUP: 2,
+      QUART_TO_CUP: 4,
+      GALLON_TO_CUP: 16,
+      LITER_TO_CUP: 4.22675,
       history: []
     };
   },
@@ -54,7 +63,7 @@ export default {
       this.result = "Results: ";
       var convertedToCups = 0;
       console.log(this.quantity);
-      var quantityTemp = this.quantity; //Number(this.quantity);
+      var quantityTemp = Number(this.quantity);
       if (this.selected === "Pint") {
         convertedToCups = quantityTemp * this.PINT_TO_CUP;
       } else if (this.selected === "Gallon") {
@@ -65,6 +74,12 @@ export default {
         convertedToCups = quantityTemp * this.FL_ONZ_TO_CUP;
       } else if (this.selected === "Cup") {
         convertedToCups = quantityTemp;
+      } else if (this.selected === "Quart") {
+        convertedToCups = quantityTemp * this.QUART_TO_CUP;
+      } else if (this.selected === "Teaspoon") {
+        convertedToCups = quantityTemp * this.TEA_TO_CUP;
+      } else if (this.selected === "Tablespoon") {
+        convertedToCups = quantityTemp * this.TABLE_TO_CUP;
       }
       console.log(convertedToCups);
       // this.result += convertedToCups;
@@ -79,10 +94,17 @@ export default {
         fromCupToNew = convertedToCups / this.FL_ONZ_TO_CUP;
       } else if (this.selected2 === "Cup") {
         fromCupToNew = convertedToCups;
+      } else if (this.selected2 === "Quart") {
+        fromCupToNew = convertedToCups / this.QUART_TO_CUP;
+      } else if (this.selected2 === "Teaspoon") {
+        fromCupToNew = convertedToCups / this.TEA_TO_CUP;
+      } else if (this.selected2 === "Tablespoon") {
+        fromCupToNew = convertedToCups / this.TABLE_TO_CUP;
       }
       fromCupToNew = fromCupToNew.toFixed(2);
       this.result += fromCupToNew + " " + this.selected2;
-      if (fromCupToNew !== 1 && this.selected2 !== "Fluid Ounces") this.result += "s";
+      if (fromCupToNew !== 1 && this.selected2 !== "Fluid Ounces")
+        this.result += "s";
 
       if (history === undefined) {
         history = new Array();
@@ -116,15 +138,13 @@ h1 {
   margin-bottom: 40px;
 }
 h2 {
-  margin:40px 0px;
-
+  margin: 40px 0px;
 }
 
 button {
   /* background:linear-gradient(rgb(181, 255, 245), rgb(117, 204, 206)); */
   border-radius: 5px;
-
-  border-width: .5px;
+  border-width: 0.5px;
   border-style: solid;
   border-color: rgb(158, 158, 158);
   color: #ff5035;
@@ -133,30 +153,27 @@ button {
 
 }
 
-input, textarea, select, button {
-  font-size:16px;
-
+input,
+textarea,
+select,
+button {
+  font-size: 16px;
 }
 .h {
-  color:#666;
-    margin:10px 0px;
-
+  color: #666;
+  margin: 10px 0px;
 }
 
 hr {
-  width:50%;
+  width: 50%;
 }
 
 ul {
   list-style-type: none;
-  padding:0;
-  color:#666;
-
-
+  padding: 0;
+  color: #666;
 }
 li {
-    margin:5px 0px;
-
+  margin: 5px 0px;
 }
-
 </style>
