@@ -66,9 +66,9 @@ li a.active {
 }
 /*Hover state for top level links*/
 li:hover a {
-  border-style: solid;
-  border-color: #666;
-  border-width: 2px;
+  border-bottom-style: solid;
+  border-bottom-color: #666;
+  border-bottom-width: .5px;
 }
 /*Style 'show menu' label button and hide it by default*/
 .show-menu {
