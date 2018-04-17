@@ -3,6 +3,7 @@ import Router from 'vue-router'
 import Homepage from '@/components/Homepage'
 import Liquid from '@/components/Liquid'
 import Dry from '@/components/Dry'
+import Saved from '@/components/Saved'
 Vue.use(Router)
 
 export default new Router({
@@ -21,6 +22,11 @@ export default new Router({
       path: '/Dry',
       name: 'Dry',
       component: Dry
+    },
+    {
+      path: '/Saved',
+      name: 'Saved',
+      component: Saved
     }
   ]
 })
