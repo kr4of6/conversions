@@ -55,24 +55,75 @@ const knex = require('knex')(config);
 
 // Login //
 
-
+//register
 app.post('/api/users', (req, res) => {
-    if(!req.body.user || !req.body.password)
+    if (!req.body.user || !req.body.password)
         return res.status(400).send();
-        knex('users').insert({username:req.body.user,password:req.body.password})
-        .then(function (result){
-          res.status(200).json({userID:result[0]});
+    knex('users').insert({ username: req.body.user, password: req.body.password })
+        .then(function (result) {
+            res.status(200).json({ userID: result[0] });
         }).catch(error => {
-        console.log(error);
-        res.status(500).json({ error });
-    });
+            console.log(error);
+            res.status(500).json({ error });
+        });
 });
 
 app.get('/api/users', (req, res) => {
 
 });
 
-// Users //
+// save conversion //
+app.post('/api/:userID/conversion', (req, res) => {
+    let userID = parseInt(req.params.userID);
+    if (!req.body.conversion)
+        return res.status(400).send();
+    knex('users').where('id',userID).first().then(user => {
+        if (user === undefined) {
+            res.status(400).send("user does not exist");
+            throw new Error("abort");
+        }
+        return knex('conversions').insert({ conversion: req.body.conversion, userID: userID })
+    }).then(result => {
+        res.status(200).json({ conversionID: result[0] });
+    }).catch(error => {
+        if(error.message !== "abort"){
+            console.log(error);
+            res.status(500).json({ error });
+        }
+        else
+        {
+            console.log(error.message);
+        }
+    })
+});
+//get conversions by user //
+app.get('/api/:userID/conversion/', (req,res) => {
+    let userID = parseInt(req.params.userID);
+    knex('conversions').where(userID,userID)
+    .select("id","conversion")
+    .then( result => {
+        res.status(200).json({conversions:result});
+    }).catch(error => {
+        console.log(error);
+        res.status(500).json({error});
+    })
+});
+app.delete('/api/:userID/conversion/:conversionID',(req,res) =>{
+    let userID = parseInt(req.params.userID);
+    let convID = parseInt(req.params.conversionID);
+    return knex('conversions').where({"id":convID,"userID":userID}).first().del().then(result => {
+        if(result === 0)
+        {
+            console.log("I didn't delete anything");
+        }
+        res.status(200).send();
+        return;
+    }).catch(error =>{
+        console.log(error);
+        res.status(500).json({error})
+    });
+    console.log("im here");
+});
 
 // Get my account
 
