@@ -32,9 +32,9 @@
   <h2  class="h" >History</h2>
   </div>
   <ul >
-    <li v-for="item in history.slice(0, 5)"> 
+    <li v-for="item in history.slice(0, 5)">
       <label>{{item}}</label>
-      <button>Save</button>
+      <button v-on:click.self.prevent="saveConv(item)">Save</button>
       </li>
   </ul>
     </div>
@@ -121,6 +121,9 @@ export default {
         " " +
         this.selected2;
       this.history.unshift(histRes);
+    },
+    saveConv: function(obj){
+      this.$store.dispatch("addSavedConversion", obj);
     }
   }
 };
