@@ -59,12 +59,10 @@ const knex = require('knex')(config);
 app.post('/api/users', (req, res) => {
     if(!req.body.user || !req.body.password)
         return res.status(400).send();
-    res.status(200).json({dude:"dude"});
-    knex('users').insert({username:req.body.user,password:req.body.password})
-    .then(function (result){
-      console.log("MADE IT", result);
-
-    }).catch(error => {
+        knex('users').insert({username:req.body.user,password:req.body.password})
+        .then(function (result){
+          res.status(200).json({userID:result[0]});
+        }).catch(error => {
         console.log(error);
         res.status(500).json({ error });
     });
