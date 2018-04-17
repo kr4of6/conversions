@@ -7,7 +7,6 @@
         <li><router-link active-class="active" to="/Liquid" exact>Liquid</router-link></li>
         <li><router-link active-class="active" to="/Dry" exact>Dry</router-link></li>
         <li><router-link active-class="active" to="/Saved" exact>Saved</router-link></li>
-
     </ul>
      <h1>Kitchen Conversions</h1>
    </nav>
