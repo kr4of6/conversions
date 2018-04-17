@@ -20,6 +20,14 @@ export default new Vuex.Store({
     setSavedConversions(state, savedConv) {
       state.savedConversions = savedConv;
     },
+    saveConv(state,conversion){
+      if(state.savedConversions === undefined)
+      {
+        state.savedConversions = new Array();
+      }
+      state.savedConversions.unshift(conversion);
+      console.log(state.savedConversions);
+    }
   },
   actions: {
     // get tweets of a user, must supply {id:id} of user you want to get tweets for
@@ -30,12 +38,14 @@ export default new Vuex.Store({
       //   console.log("getUserTweets failed:", err);
       // });
     },
-    addSavedConversion(context, conversion) {
+    addSavedConversion(context,conversion) {
+      context.commit('saveConv',conversion)
     //   axios.post("/api/users/" + context.state.user.id + "/tweets", tweet, getAuthHeader()).then(response => {
     //     return context.dispatch('getFeed');
     //   }).catch(err => {
     //     console.log("addTweet failed:", err);
     //   });
+    console.log(conversion)
     },
   }
 });

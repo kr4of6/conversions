@@ -32,7 +32,10 @@
   <h2  class="h" >History</h2>
   </div>
   <ul >
-    <li v-for="item in history.slice(0, 5)"> <label>{{item}}</label></li>
+    <li v-for="item in history.slice(0, 5)"> 
+      <label>{{item}}</label>
+      <button>Save</button>
+      </li>
   </ul>
     </div>
 

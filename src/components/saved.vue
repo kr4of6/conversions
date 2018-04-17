@@ -1,4 +1,11 @@
 <template>
+    <ul>
+    <li v-for="item in history">
+        <label>
+            {{item}}
+        </label>
+    </li>
+    </ul>
 </template>
 
 <script>
@@ -6,11 +13,23 @@ export default {
   name: "Liquid",
   data() {
     return {
-      history: []
     };
   },
-  methods: {
+  created: function()
+  {
+
+  },
+  computed: {
+    history: function()
+    {
+    console.log("this was called",this.$store.savedConversions);
+    return this.$store.getters.savedConversions
     }
+  },
+  methods: 
+  {
+
+  }
   
 };
 </script>

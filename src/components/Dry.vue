@@ -24,7 +24,10 @@
   <h2  class="h" >History</h2>
   </div>
   <ul >
-    <li v-for="item in history.slice(0, 5)"> <label>{{item}}</label></li>
+    <li v-for="item in history.slice(0, 5)"> 
+      <label>{{item}}</label>
+      <button v-on:click.self.prevent="saveConv(item)">Save</button>
+      </li>
   </ul>
     </div>
 
@@ -47,11 +50,8 @@ export default {
   },
   methods: {
     convertDry: function() {
-      // console.log(this.selected);
-      // console.log(this.selected2);
       this.result = "Results: ";
       var convertedToCups = 0;
-       console.log(this.quantity);
       var quantityTemp = Number(this.quantity);
       if (this.selected === "Ounces") {
         convertedToCups = quantityTemp / this.OUNCES_TO_GRAM;
@@ -62,7 +62,6 @@ export default {
       } else if (this.selected === "Kilogram") {
         convertedToCups = quantityTemp / this.KILOGRAM_TO_CUP;
       }
-      console.log(convertedToCups);
       // this.result += convertedToCups;
       var fromCupToNew = 0;
       if (this.selected2 === "Ounces") {
@@ -91,6 +90,9 @@ export default {
         " " +
         this.selected2;
       this.history.unshift(histRes);
+    },
+    saveConv: function(obj){
+      this.$store.dispatch("addSavedConversion", obj);
     }
   }
 };
