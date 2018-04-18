@@ -18,7 +18,7 @@ const knex = require('knex')(config);
 
 // jwt setup
 const jwt = require('jsonwebtoken');
-let jwtSecret = process.env.jwtSecret;
+let jwtSecret = "123412431234"; //process.env.jwtSecret;
 if (jwtSecret === undefined) {
   console.log("You need to define a jwtSecret environment variable to continue.");
   knex.destroy();
@@ -33,8 +33,10 @@ const verifyToken = (req, res, next) => {
   if (!token)
     return res.status(403).send({ error: 'No token provided.' });
   jwt.verify(token, jwtSecret, function(err, decoded) {
-    if (err)
+    if (err){
+        console.log(err);
       return res.status(500).send({ error: 'Failed to authenticate token.' });
+    }
     // if everything good, save to request for use in other routes
     req.userID = decoded.id;
     next();
@@ -83,8 +85,10 @@ app.post('/api/users', (req, res) => {
         }
 
     }).then(function (result) {
-
-                res.status(200).json({ userID: result[0] });
+            let token = jwt.sign({ id: result[0] }, jwtSecret, {
+            expiresIn: '24h' // expires in 24 hours
+              });
+                res.status(200).json({ userID: result[0],token:token });
             }).catch(error => {
                 console.log(error.message);
                 res.status(500).json({ error });
