@@ -5,7 +5,7 @@ module.exports = {
   development: {
     client: 'mariasql',
     connection: {
-      unixSocket : '/var/run/mysqld/mysqld.sock',
+      unixSocket : '/var/run/mysqld/mysql.sock',
       user     : 'brian',
       db : 'conversions',
       charset  : 'utf8'
@@ -15,7 +15,7 @@ module.exports = {
   staging: {
     client: 'postgresql',
     connection: {
-      database: 'my_db',
+      db: 'my_db',
       user:     'username',
       password: 'password'
     },
