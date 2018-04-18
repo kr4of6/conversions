@@ -7,6 +7,13 @@
         <li><router-link active-class="active" to="/Liquid" exact>Liquid</router-link></li>
         <li><router-link active-class="active" to="/Dry" exact>Dry</router-link></li>
         <li><router-link active-class="active" to="/Saved" exact>Saved</router-link></li>
+        <li class="formRight">
+          <form v-on:submit.prevent="login">
+            <input v-model="username" placeholder="Username">
+            <input v-model="password" type="password" placeholder="Password">
+            <button class="primary" type="submit">Login/Register</button>
+          </form>
+        </li>
     </ul>
      <h1>Kitchen Conversions</h1>
    </nav>
@@ -14,7 +21,24 @@
 
 <script>
 export default {
-  name: "AppHeader"
+  name: "AppHeader",
+  data() {
+    return {
+      username: '',
+      password: '',
+    }
+  },
+  methods: {
+    login: function(){
+      this.$store.dispatch('login',{
+        user:this.username,
+        password:this.password,
+      }).then(user => {
+        console.log("got to here");
+        this.username = '';
+        this.password = '';
+      })}
+  }
 };
 </script>
 
@@ -26,7 +50,7 @@ h1 {
   letter-spacing: 0.2rem;
   color: #999;
   padding: 0px 0px 10px 0px;
-  margin:  0px 0px 50px 0px;
+  margin: 0px 0px 50px 0px;
   border-bottom-style: solid;
   border-bottom-color: #999;
   border-bottom-width: 2px;
@@ -42,6 +66,16 @@ ul {
   list-style-type: none;
   margin: 0;
   padding: 0;
+}
+.formRight {
+  float: right;
+}
+.formRight button {
+  border-radius: 5px;
+  border-width: 0.5px;
+  border-style: solid;
+  border-color: rgb(158, 158, 158);
+  color: #ff5035;
 }
 
 /*Create a horizontal list with spacing*/
@@ -68,7 +102,7 @@ li a.active {
 li:hover a {
   border-bottom-style: solid;
   border-bottom-color: #666;
-  border-bottom-width: .5px;
+  border-bottom-width: 0.5px;
 }
 /*Style 'show menu' label button and hide it by default*/
 .show-menu {

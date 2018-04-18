@@ -2,6 +2,7 @@ import Vue from 'vue';
 import Vuex from 'vuex';
 
 import axios from 'axios';
+import { userInfo } from 'os';
 
 Vue.use(Vuex);
 
@@ -12,6 +13,7 @@ const getAuthHeader = () => {
 export default new Vuex.Store({
   state: {
     savedConversions: [],
+    userID: ''
   },
   getters: {
     savedConversions: state => state.savedConversions,
@@ -27,9 +29,20 @@ export default new Vuex.Store({
       }
       state.savedConversions.unshift(conversion);
       console.log(state.savedConversions);
+    },
+    setUser(state, userID){
+      state.userID = userID;
     }
   },
   actions: {
+    login(context,loginInfo) {
+      return axios.post('/api/users',loginInfo)
+      .then(response => {
+        context.commit('setUser',response.data.userID);
+      }).catch(error =>{
+        console.log("error in login in");
+      })
+    },
     // get tweets of a user, must supply {id:id} of user you want to get tweets for
     getSavedConversions(context, user) {
       // return axios.get("/api/users/" + user.id + "/tweets").then(response => {
