@@ -3,12 +3,11 @@
 module.exports = {
 
   development: {
-    client: 'mysql',
+    client: 'mariasql',
     connection: {
-      host     : '127.0.0.1',
-      user     : 'root',
-      password : 'pocof951159',
-      database : 'conversions',
+      unixSocket : '/var/run/mysqld/mysqld.sock',
+      user     : 'brian',
+      db : 'conversions',
       charset  : 'utf8'
     }
   },
