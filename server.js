@@ -17,29 +17,29 @@ const knex = require('knex')(config);
 // const saltRounds = 10;
 
 // jwt setup
-// const jwt = require('jsonwebtoken');
-// let jwtSecret = process.env.jwtSecret;
-// if (jwtSecret === undefined) {
-//   console.log("You need to define a jwtSecret environment variable to continue.");
-//   knex.destroy();
-//   process.exit();
-// }
+const jwt = require('jsonwebtoken');
+let jwtSecret = process.env.jwtSecret;
+if (jwtSecret === undefined) {
+  console.log("You need to define a jwtSecret environment variable to continue.");
+  knex.destroy();
+  process.exit();
+}
 
 // Verify the token that a client gives us.
 // This is setup as middleware, so it can be passed as an additional argument to Express after
 // the URL in any route. This will restrict access to only those clients who possess a valid token.
-// const verifyToken = (req, res, next) => {
-//   const token = req.headers['authorization'];
-//   if (!token)
-//     return res.status(403).send({ error: 'No token provided.' });
-//   jwt.verify(token, jwtSecret, function(err, decoded) {
-//     if (err)
-//       return res.status(500).send({ error: 'Failed to authenticate token.' });
-//     // if everything good, save to request for use in other routes
-//     req.userID = decoded.id;
-//     next();
-//   });
-// }
+const verifyToken = (req, res, next) => {
+  const token = req.headers['authorization'];
+  if (!token)
+    return res.status(403).send({ error: 'No token provided.' });
+  jwt.verify(token, jwtSecret, function(err, decoded) {
+    if (err)
+      return res.status(500).send({ error: 'Failed to authenticate token.' });
+    // if everything good, save to request for use in other routes
+    req.userID = decoded.id;
+    next();
+  });
+}
 
 // multer setup
 // const multer = require('multer');
@@ -77,13 +77,13 @@ app.post('/api/users', (req, res) => {
         if (result === -1){
             return knex('users').insert({ username: req.body.user, password: req.body.password });
         }
-        else 
+        else
         {
             return [result];
         }
-        
+
     }).then(function (result) {
-    
+
                 res.status(200).json({ userID: result[0] });
             }).catch(error => {
                 console.log(error.message);
@@ -91,12 +91,9 @@ app.post('/api/users', (req, res) => {
             });
 });
 
-app.get('/api/users', (req, res) => {
-
-});
 
 // save conversion //
-app.post('/api/:userID/conversion', (req, res) => {
+app.post('/api/:userID/conversion', verifyToken,(req, res) => {
     let userID = parseInt(req.params.userID);
     if (!req.body.conversion)
         return res.status(400).send();
@@ -131,7 +128,7 @@ app.get('/api/:userID/conversion/', (req, res) => {
         })
 });
 //del conver//
-app.delete('/api/:userID/conversion/:conversionID', (req, res) => {
+app.delete('/api/:userID/conversion/:conversionID', verifyToken,(req, res) => {
     let userID = parseInt(req.params.userID);
     let convID = parseInt(req.params.conversionID);
     return knex('conversions').where({ "id": convID, "userID": userID }).first().del().then(result => {
@@ -147,7 +144,7 @@ app.delete('/api/:userID/conversion/:conversionID', (req, res) => {
     console.log("im here");
 });
 //update conversion to have  recipe//
-app.put('/api/:userID/conversion/:conversionID',(req,res) => {
+app.put('/api/:userID/conversion/:conversionID',verifyToken,(req,res) => {
     let userID = parseInt(req.params.userID);
     let convID = parseInt(req.params.conversionID);
     if(!req.body.recipe)
