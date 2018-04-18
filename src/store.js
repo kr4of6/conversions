@@ -13,7 +13,9 @@ const getAuthHeader = () => {
 export default new Vuex.Store({
   state: {
     savedConversions: [],
-    userID: ''
+    userID: '',
+    token: '',
+
   },
   getters: {
     savedConversions: state => state.savedConversions,
@@ -21,7 +23,8 @@ export default new Vuex.Store({
       if (state.userID === '')
         return false;
       return true;
-    }
+    },
+    getToken: state => state.token,
   },
   mutations: {
     setSavedConversions(state, savedConv) {
@@ -37,7 +40,14 @@ export default new Vuex.Store({
     },
     setUser(state, userID){
       state.userID = userID;
-    }
+    },
+    setToken (state, token) {
+           state.token = token;
+            if (token === '')
+      	localStorage.removeItem('token');
+            else
+      	localStorage.setItem('token', token)
+    },
   },
   actions: {
     login(context,loginInfo) {
@@ -46,14 +56,16 @@ export default new Vuex.Store({
         console.log(response.data.userID);
         context.commit('setUser',response.data.userID);
         context.dispatch('getSavedConversions',response.data.userID);
+        context.commit('setToken',response.data.token);
       }).catch(error =>{
         console.log(error);
       })
-      
+
     },
     logout(context){
       context.commit('setUser','');
       context.commit('setSavedConversions',[]);
+      context.commit('setToken','');
     },
     // get tweets oSf a user, must supply {id:id} of user you want to get tweets for
     getSavedConversions(context, user) {
@@ -71,7 +83,7 @@ export default new Vuex.Store({
     },
     addSavedConversion(context,conversion) {
       // context.commit('saveConv',conversion);
-      axios.post("api/" + context.state.userID + "/conversion", {"conversion":conversion}).then(result =>{
+      axios.post("api/" + context.state.userID + "/conversion", {"conversion":conversion},getAuthHeader()).then(result =>{
       context.dispatch('getSavedConversions',context.state.userID)
       }).catch(error => {
         console.log(error);
@@ -84,7 +96,7 @@ export default new Vuex.Store({
     console.log(conversion)
     },
     deleteConversion(context,convID){
-      axios.delete("api/" + context.state.userID + "/conversion/" +convID).then(result =>{
+      axios.delete("api/" + context.state.userID + "/conversion/" +convID,getAuthHeader()).then(result =>{
         context.dispatch('getSavedConversions',context.state.userID)
         }).catch(error => {
           console.log(error);
@@ -93,7 +105,7 @@ export default new Vuex.Store({
     updateConWithRecipe(context,info){
       console.log(info);
       console.log(info[12])
-      axios.put("api/" + context.state.userID + "/conversion/" + info.id,info).then(result =>{
+      axios.put("api/" + context.state.userID + "/conversion/" + info.id,info,getAuthHeader()).then(result =>{
         context.dispatch('getSavedConversions',context.state.userID)
         }).catch(error => {
           console.log(error);
