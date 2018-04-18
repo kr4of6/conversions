@@ -4,6 +4,7 @@ exports.up = function(knex, Promise) {
   knex.schema.createTable('conversions', function(table) {
     table.increments('id').primary();
     table.string('conversion');
+    table.string('recipe');
     table.integer('userID').unsigned().notNullable().references('id').inTable('users');
 
   }),

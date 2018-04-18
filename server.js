@@ -122,7 +122,7 @@ app.post('/api/:userID/conversion', (req, res) => {
 app.get('/api/:userID/conversion/', (req, res) => {
     let userID = parseInt(req.params.userID);
     knex('conversions').where(userID, userID)
-        .select("id", "conversion")
+        .select("id", "conversion","recipe")
         .then(result => {
             res.status(200).json({ conversions: result });
         }).catch(error => {
@@ -130,6 +130,7 @@ app.get('/api/:userID/conversion/', (req, res) => {
             res.status(500).json({ error });
         })
 });
+//del conver//
 app.delete('/api/:userID/conversion/:conversionID', (req, res) => {
     let userID = parseInt(req.params.userID);
     let convID = parseInt(req.params.conversionID);
@@ -144,6 +145,20 @@ app.delete('/api/:userID/conversion/:conversionID', (req, res) => {
         res.status(500).json({ error })
     });
     console.log("im here");
+});
+//update conversion to have  recipe//
+app.put('/api/:userID/conversion/:conversionID',(req,res) => {
+    let userID = parseInt(req.params.userID);
+    let convID = parseInt(req.params.conversionID);
+    if(!req.body.recipe)
+        return res.status(400).send();
+    return knex('conversions').where({ "id": convID, "userID": userID }).first()
+    .update({recipe:req.body.recipe}).then(result =>{
+        res.status(200).send();
+    }).catch(error =>{
+        console.log(error);
+        res.status(400).send();
+    })
 });
 
 // Get my account

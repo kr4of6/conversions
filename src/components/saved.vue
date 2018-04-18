@@ -1,11 +1,17 @@
 <template>
     <ul>
     <li v-for="item in history">
-        
         <label>
             {{item.conversion}}
         </label>
-        <button>Add to recipe</button>
+        <label class="recipe" v-if="item.recipe !== null">Recipe:{{item.recipe}} </label>
+        <div class="no" v-else>
+          <button v-if="clickedYes"  v-on:click="clickedYes = false">Add to recipe</button>
+          <form class="no" v-else v-on:submit.prevent="updateRecipe(item.id)">
+            <input v-model="recipe" placeholder="recipe name">
+            <button>submit</button>
+          </form>
+        </div>
         <button v-on:click="del(item)">X</button>
     </li>
     </ul>
@@ -16,6 +22,8 @@ export default {
   name: "Liquid",
   data() {
     return {
+      clickedYes:true,
+      recipe: ''
     };
   },
   created: function()
@@ -34,6 +42,10 @@ export default {
     del: function(item)
     {
       this.$store.dispatch('deleteConversion',item.id);
+    },
+    updateRecipe: function(id)
+    {
+      this.$store.dispatch("updateConWithRecipe",{id:id,recipe:this.recipe})
     }
   }
   
@@ -41,6 +53,9 @@ export default {
 </script>
 
 <style scoped>
+.no {
+  display: inline;
+}
 body {
   padding: 0px;
   margin: 0px;
@@ -95,5 +110,9 @@ ul {
 }
 li {
   margin: 5px 0px;
+}
+.recipe {
+  color: black;
+  font-style: italic;
 }
 </style>

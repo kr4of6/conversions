@@ -88,6 +88,15 @@ export default new Vuex.Store({
         }).catch(error => {
           console.log(error);
         })
+    },
+    updateConWithRecipe(context,info){
+      console.log(info);
+      console.log(info[12])
+      axios.put("api/" + context.state.userID + "/conversion/" + info.id,info).then(result =>{
+        context.dispatch('getSavedConversions',context.state.userID)
+        }).catch(error => {
+          console.log(error);
+        })
     }
   }
 });
