@@ -43,6 +43,7 @@ export default new Vuex.Store({
     login(context,loginInfo) {
       return axios.post('/api/users',loginInfo)
       .then(response => {
+        console.log(response.data.userID);
         context.commit('setUser',response.data.userID);
         context.dispatch('getSavedConversions',response.data.userID);
       }).catch(error =>{

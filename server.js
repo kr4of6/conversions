@@ -121,7 +121,7 @@ app.post('/api/:userID/conversion', (req, res) => {
 //get conversions by user //
 app.get('/api/:userID/conversion/', (req, res) => {
     let userID = parseInt(req.params.userID);
-    knex('conversions').where(userID, userID)
+    knex('conversions').where("userID", userID)
         .select("id", "conversion","recipe")
         .then(result => {
             res.status(200).json({ conversions: result });
