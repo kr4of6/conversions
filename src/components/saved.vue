@@ -2,7 +2,7 @@
     <ul>
     <li v-for="item in history">
         <label>
-            {{item}}
+            {{item.conversion}}
         </label>
     </li>
     </ul>
@@ -22,7 +22,7 @@ export default {
   computed: {
     history: function()
     {
-    console.log("this was called",this.$store.savedConversions);
+    console.log("this was called",this.$store.getters.savedConversions);
     return this.$store.getters.savedConversions
     }
   },

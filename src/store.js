@@ -44,15 +44,23 @@ export default new Vuex.Store({
       return axios.post('/api/users',loginInfo)
       .then(response => {
         context.commit('setUser',response.data.userID);
+        context.dispatch('getSavedConversions',response.data.userID);
       }).catch(error =>{
-        console.log("error in login in");
+        console.log(error);
       })
+      
     },
     logout(context){
       context.commit('setUser','');
     },
     // get tweets oSf a user, must supply {id:id} of user you want to get tweets for
     getSavedConversions(context, user) {
+      return axios.get("api/" + user + "/conversion").then(result => {
+        console.log("result",result);
+        context.commit('setSavedConversions',result.data.conversions);
+      }).catch(error =>{
+        console.log(error);
+      })
       // return axios.get("/api/users/" + user.id + "/tweets").then(response => {
       //   context.commit('setFeedView', response.data.tweets);
       // }).catch(err => {
@@ -60,7 +68,12 @@ export default new Vuex.Store({
       // });
     },
     addSavedConversion(context,conversion) {
-      context.commit('saveConv',conversion)
+      // context.commit('saveConv',conversion);
+      axios.post("api/" + context.state.userID + "/conversion", {"conversion":conversion}).then(result =>{
+      context.dispatch('getSavedConversions',context.state.userID)
+      }).catch(error => {
+        console.log(error);
+      })
     //   axios.post("/api/users/" + context.state.user.id + "/tweets", tweet, getAuthHeader()).then(response => {
     //     return context.dispatch('getFeed');
     //   }).catch(err => {
