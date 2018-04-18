@@ -1,9 +1,12 @@
 <template>
     <ul>
     <li v-for="item in history">
+        
         <label>
             {{item.conversion}}
         </label>
+        <button>Add to recipe</button>
+        <button>X</button>
     </li>
     </ul>
 </template>
@@ -83,6 +86,9 @@ ul {
   list-style-type: none;
   padding: 0;
   color: #666;
+  text-align: right;
+  align-content: center;
+  display: inline-block;
 }
 li {
   margin: 5px 0px;
