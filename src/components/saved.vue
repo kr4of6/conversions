@@ -6,7 +6,7 @@
             {{item.conversion}}
         </label>
         <button>Add to recipe</button>
-        <button>X</button>
+        <button v-on:click="del(item)">X</button>
     </li>
     </ul>
 </template>
@@ -31,7 +31,10 @@ export default {
   },
   methods: 
   {
-
+    del: function(item)
+    {
+      this.$store.dispatch('deleteConversion',item.id);
+    }
   }
   
 };

@@ -82,5 +82,12 @@ export default new Vuex.Store({
     //   });
     console.log(conversion)
     },
+    deleteConversion(context,convID){
+      axios.delete("api/" + context.state.userID + "/conversion/" +convID).then(result =>{
+        context.dispatch('getSavedConversions',context.state.userID)
+        }).catch(error => {
+          console.log(error);
+        })
+    }
   }
 });
