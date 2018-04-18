@@ -6,7 +6,7 @@
         </label>
         <label class="recipe" v-if="item.recipe !== null">Recipe:{{item.recipe}} </label>
         <div class="no" v-else>
-          <button v-if="clickedYes"  v-on:click="clickedYes = false">Add to recipe</button>
+          <button v-if="clickedYes[item.id]"  v-on:click="toggleClick(item)">Add to recipe</button>
           <form class="no" v-else v-on:submit.prevent="updateRecipe(item.id)">
             <input v-model="recipe" placeholder="recipe name">
             <button>submit</button>
@@ -22,7 +22,7 @@ export default {
   name: "Liquid",
   data() {
     return {
-      clickedYes:true,
+      clickedYes:[],
       recipe: ''
     };
   },
@@ -33,19 +33,38 @@ export default {
   computed: {
     history: function()
     {
+      if(this.$store.getters.savedConversions.length === 0)
+        return [];
+        if (this.clickedYes.length === 0){
+          console.log("INIT")
+          this.clickedYes = new Array(this.$store.getters.savedConversions[this.$store.getters.savedConversions.length-1].id + 1);
+          this.clickedYes.fill(true);
+        }
+      console.log(this.clickedYes);
     console.log("this was called",this.$store.getters.savedConversions);
     return this.$store.getters.savedConversions
-    }
+    },
+
+
   },
   methods: 
   {
-    del: function(item)
-    {
+    del: function(item){
       this.$store.dispatch('deleteConversion',item.id);
     },
-    updateRecipe: function(id)
-    {
+    updateRecipe: function(id){
       this.$store.dispatch("updateConWithRecipe",{id:id,recipe:this.recipe})
+    },
+    toggleClick: function(item){
+      console.log(item.id,this.clickedYes[item.id - 1]);
+      this.$set(this.clickedYes,item.id,false);
+      // this.clickedYes = new Array([false,false,false,false]);
+
+
+    }, 
+       clickedYesCheck: function(id)
+    {
+      return this.clickedYes[id-1];
     }
   }
   
