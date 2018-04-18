@@ -53,7 +53,9 @@ export default {
       this.$store.dispatch('deleteConversion',item.id);
     },
     updateRecipe: function(id){
-      this.$store.dispatch("updateConWithRecipe",{id:id,recipe:this.recipe})
+      let temp = this.recipe;
+      this.recipe = '';
+      this.$store.dispatch("updateConWithRecipe",{id:id,recipe:temp})
     },
     toggleClick: function(item){
       console.log(item.id,this.clickedYes[item.id - 1]);
