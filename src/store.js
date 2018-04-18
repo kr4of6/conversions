@@ -17,6 +17,11 @@ export default new Vuex.Store({
   },
   getters: {
     savedConversions: state => state.savedConversions,
+    loggedIn: state => {
+      if (state.userID === '')
+        return false;
+      return true;
+    }
   },
   mutations: {
     setSavedConversions(state, savedConv) {
@@ -43,7 +48,10 @@ export default new Vuex.Store({
         console.log("error in login in");
       })
     },
-    // get tweets of a user, must supply {id:id} of user you want to get tweets for
+    logout(context){
+      context.commit('setUser','');
+    },
+    // get tweets oSf a user, must supply {id:id} of user you want to get tweets for
     getSavedConversions(context, user) {
       // return axios.get("/api/users/" + user.id + "/tweets").then(response => {
       //   context.commit('setFeedView', response.data.tweets);

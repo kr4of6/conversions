@@ -7,7 +7,10 @@
         <li><router-link active-class="active" to="/Liquid" exact>Liquid</router-link></li>
         <li><router-link active-class="active" to="/Dry" exact>Dry</router-link></li>
         <li><router-link active-class="active" to="/Saved" exact>Saved</router-link></li>
-        <li class="formRight">
+        <li class="formRight" v-if="loggedIn">
+          <button v-on:click="logout">logout</button>
+        </li>
+        <li class="formRight" v-else>
           <form v-on:submit.prevent="login">
             <input v-model="username" placeholder="Username">
             <input v-model="password" type="password" placeholder="Password">
@@ -34,10 +37,17 @@ export default {
         user:this.username,
         password:this.password,
       }).then(user => {
-        console.log("got to here");
         this.username = '';
         this.password = '';
-      })}
+      })},
+      logout: function(){
+        this.$store.dispatch("logout");
+      }
+  },
+  computed: {
+    loggedIn: function() {
+      return this.$store.getters.loggedIn;
+    }
   }
 };
 </script>
