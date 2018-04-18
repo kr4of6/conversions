@@ -52,6 +52,7 @@ export default new Vuex.Store({
     },
     logout(context){
       context.commit('setUser','');
+      context.commit('setSavedConversions',[]);
     },
     // get tweets oSf a user, must supply {id:id} of user you want to get tweets for
     getSavedConversions(context, user) {
